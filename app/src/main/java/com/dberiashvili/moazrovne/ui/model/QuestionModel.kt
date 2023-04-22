@@ -13,5 +13,6 @@ data class QuestionModel(
     @SerialName("question_text")
     val questionText: String,
     val comment: String? = null,
-    val league: String? = null
+    val league: String? = null,
+    var isFavorite: Boolean = false
 )

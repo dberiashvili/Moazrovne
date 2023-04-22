@@ -22,6 +22,6 @@ interface QuestionDao {
     @Query("SELECT * FROM  Questions_Table ORDER BY league DESC")
     fun getFavoriteQuestions() :  Flow<List<QuestionEntity>>
 
-    @Query("SELECT * FROM Questions_Table WHERE questionId LIKE :id")
-    fun getQuestion(id : String) : QuestionEntity
+    @Query("SELECT * FROM Questions_Table WHERE questionId = :id")
+    fun getQuestion(id : String) : Flow<QuestionEntity?>
 }

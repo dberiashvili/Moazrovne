@@ -11,5 +11,6 @@ data class QuestionEntity(
     val answer: String,
     val questionText: String,
     val comment: String? ,
-    val league: String?
+    val league: String?,
+    var isFavorite: Boolean = false
 )

@@ -1,6 +1,7 @@
 package com.dberiashvili.moazrovne.ui
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.dberiashvili.moazrovne.R
@@ -23,7 +24,8 @@ class QuestionViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     private val _questions: MutableStateFlow<List<QuestionModel>> = MutableStateFlow(emptyList())
     val questions = _questions.asStateFlow()
-    private val _savedQuestions: MutableStateFlow<List<QuestionModel>> = MutableStateFlow(emptyList())
+    private val _savedQuestions: MutableStateFlow<List<QuestionModel>> =
+        MutableStateFlow(emptyList())
     val savedQuestions = _savedQuestions.asStateFlow()
 
     init {
@@ -44,10 +46,27 @@ class QuestionViewModel @Inject constructor(
         }
     }
 
-   private  fun getFavoriteQuestions() {
+    fun deleteQuestion(questionModel: QuestionModel) {
+        viewModelScope.launch {
+            repo.deleteQuestion(questionModel)
+        }
+    }
+
+    private fun getFavoriteQuestions() {
         viewModelScope.launch {
             repo.getQuestions().collect {
                 _savedQuestions.value = it
+            }
+        }
+    }
+
+    fun isFavorite(id: String) {
+        viewModelScope.launch {
+            repo.isFavorite(id).collectLatest {
+                if (it != null) {
+                    it.isFavorite = true
+                }
+
             }
         }
     }

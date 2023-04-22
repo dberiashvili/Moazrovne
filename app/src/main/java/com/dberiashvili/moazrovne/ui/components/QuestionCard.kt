@@ -48,10 +48,16 @@ fun ExpandableCard(
     questionText: String,
     image: String,
 ) {
+    viewModel.isFavorite(questionId)
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
         targetValue = if (expandedState) 180f else 0f
     )
+
+    var isFavorite by remember {
+        mutableStateOf(question.isFavorite)
+    }
+
 
     Card(
         modifier = Modifier
@@ -102,10 +108,15 @@ fun ExpandableCard(
                         .weight(1f)
                         .alpha(ContentAlpha.medium),
                     onClick = {
-                        viewModel.saveQuestion(question)
+                        if (question.isFavorite) {
+                            viewModel.deleteQuestion(question)
+                        } else {
+                            viewModel.saveQuestion(question)
+                        }
+
                     }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.baseline_favorite_border_24),
+                        painter =  if (isFavorite) painterResource(id = R.drawable.baseline_favorite_24) else painterResource(id = R.drawable.baseline_favorite_border_24),
                         contentDescription = "save",
                     )
                 }

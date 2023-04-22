@@ -13,7 +13,7 @@ class QuestionRepoImpl @Inject constructor(
     private val mapper: Mapper
 ) : QuestionsRepo {
     override suspend fun addQuestion(questionModel: QuestionModel) {
-        db.questionsDao().addQuestion(mapper.convert(questionModel))
+        db.questionsDao().addQuestion(mapper.convert(questionModel.copy(isFavorite = true)))
     }
 
     override suspend fun getQuestions(): Flow<List<QuestionModel>> {
@@ -22,5 +22,17 @@ class QuestionRepoImpl @Inject constructor(
                 mapper.convert(entity)
             }
         }
+    }
+
+    override suspend fun isFavorite(id: String): Flow<QuestionModel?> {
+        return db.questionsDao().getQuestion(id).map {savedQuestion ->
+            savedQuestion?.let {
+                mapper.convert(it)
+            }
+        }
+    }
+
+    override suspend fun deleteQuestion(questionModel: QuestionModel) {
+        db.questionsDao().deleteQuestion(mapper.convert(questionModel))
     }
 }

@@ -5,14 +5,15 @@ import com.dberiashvili.moazrovne.ui.model.QuestionModel
 
 class Mapper {
     fun convert(questionModel: QuestionModel): QuestionEntity {
-       return QuestionEntity(
+        return QuestionEntity(
             questionModel.questionId,
             questionModel.author,
             questionModel.questionImg,
             questionModel.answer,
             questionModel.questionText,
             questionModel.comment,
-            questionModel.league
+            questionModel.league,
+            questionModel.isFavorite
         )
     }
 
@@ -24,7 +25,8 @@ class Mapper {
             questionModel.answer,
             questionModel.questionText,
             questionModel.comment,
-            questionModel.league
+            questionModel.league,
+            questionModel.isFavorite
         )
     }
 }

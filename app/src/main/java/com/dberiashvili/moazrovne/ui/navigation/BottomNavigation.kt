@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Badge
+import androidx.compose.material.BadgedBox
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -47,7 +49,7 @@ fun BottomNavigation(navController: NavController, viewModel: QuestionViewModel)
             icon = R.drawable.games,
         ),
         BottomNavItem(
-            name = "შენაცული კითხვები",
+            name = "შენახული კითხვები",
             route = "favorites",
             icon = R.drawable.baseline_favorite_24,
             badgeCount = viewModel.savedQuestions.collectAsState().value.size
@@ -80,29 +82,27 @@ fun BottomNavigation(navController: NavController, viewModel: QuestionViewModel)
                             }
                         },
                         label = {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ) {
                                 Text(
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                     text = item.name,
                                     fontWeight = FontWeight.SemiBold,
                                 )
-                            }
                         },
                         icon = {
-                            Icon(
-                                painter = painterResource(id = item.icon),
-                                contentDescription = "${item.name} Icon",
-                            )
+                            BadgedBox(
+                                badge = {
+                                    if (item.badgeCount > 0) {
+                                        Badge { Text(item.badgeCount.toString()) }
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = item.icon),
+                                    contentDescription = "favorites"
+                                )
+                            }
                         }
                     )
-                    if (item.route == "favorites" && item.badgeCount> 0) {
-                        Column() {
-                            Text(text = item.badgeCount.toString())
-                            
-                        }
-                    }
                 }
             }
         }, content = {
