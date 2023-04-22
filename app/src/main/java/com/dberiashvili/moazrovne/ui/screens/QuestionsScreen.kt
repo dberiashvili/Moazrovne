@@ -1,9 +1,11 @@
 package com.dberiashvili.moazrovne.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -21,7 +23,9 @@ fun QuestionsScreen(
     viewModel: QuestionViewModel  = hiltViewModel()
 ) {
     val questions = viewModel.questions.collectAsState().value
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(modifier = Modifier
+        .background(MaterialTheme.colorScheme.primary)
+        .fillMaxSize()) {
         items(questions) {
             ExpandableCard(
                 questionId = it.questionId,
@@ -37,9 +41,8 @@ fun QuestionsScreen(
                 image = it.questionImg ?: "",
                 questionText = it.questionText,
                 question = it,
-                saveQuestion = {
-                    viewModel.saveQuestion(it)
-                }
+                comment = it.comment,
+                viewModel = viewModel
             )
         }
     }

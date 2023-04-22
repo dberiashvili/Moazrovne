@@ -10,16 +10,16 @@ import com.dberiashvili.moazrovne.ui.screens.QuestionsScreen
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screens.Home.route) {
-        composable(Screens.Home.route) {
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
             QuestionsScreen()
         }
 
-        composable(Screens.Game.route) {
+        composable("game") {
             QuestionsScreen()
         }
 
-        composable(Screens.Favorites.route) {
+        composable("favorites") {
             FavoriteScreen()
         }
     }

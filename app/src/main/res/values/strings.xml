@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Moazrovne</string>
+    <string name="empty_list">სია ცარიელია</string>
+    <string name="answer">პასუხი:</string>
+    <string name="comment">კომენტარი:</string>
 </resources>

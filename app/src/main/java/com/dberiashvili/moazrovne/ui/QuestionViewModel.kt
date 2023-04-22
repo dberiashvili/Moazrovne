@@ -23,8 +23,11 @@ class QuestionViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     private val _questions: MutableStateFlow<List<QuestionModel>> = MutableStateFlow(emptyList())
     val questions = _questions.asStateFlow()
+    private val _savedQuestions: MutableStateFlow<List<QuestionModel>> = MutableStateFlow(emptyList())
+    val savedQuestions = _savedQuestions.asStateFlow()
 
     init {
+        getFavoriteQuestions()
         viewModelScope.launch {
             val json = Json { ignoreUnknownKeys = true }
             val inputStream: InputStream =
@@ -41,10 +44,10 @@ class QuestionViewModel @Inject constructor(
         }
     }
 
-    fun getFavoriteQuestions() {
+   private  fun getFavoriteQuestions() {
         viewModelScope.launch {
             repo.getQuestions().collect {
-                _questions.value = it
+                _savedQuestions.value = it
             }
         }
     }
